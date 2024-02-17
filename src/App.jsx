@@ -111,6 +111,10 @@ function App() {
     });
   }, [isMounted]);
 
+import Nab from "./Nab.jsx";
+
+// Following https://aps.autodesk.com/en/docs/reality-capture/v1/tutorials/create-3d-mesh-from-photos/
+function App() {
   return (
     <>
       <div style={{ fontSize: "5rem" }}>📸 Nab</div>
@@ -124,6 +128,7 @@ function App() {
               </label>
               <input type="submit" text="submit" />
             </form>
+            <Nab video="temp"></Nab>
           </div>
           <div> <Scene /> </div>
         </div>
