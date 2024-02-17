@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, Suspense } from "react";
 import "./App.css";
 import Nab from "./Nab.jsx";
-import Scene from "./components/render3d";
+//import Scene from "./components/render3d";
 
 // Following https://aps.autodesk.com/en/docs/reality-capture/v1/tutorials/create-3d-mesh-from-photos/
 function App() {
@@ -21,8 +21,8 @@ function App() {
             <Nab video="temp"></Nab>
           </div>
           <div>
-            {" "}
-            <Scene />{" "}
+            {/* {" "}
+            <Scene />{" "} */}
           </div>
         </div>
       </main>
