@@ -114,6 +114,20 @@ function App() {
   return (
     <>
       <div style={{ fontSize: "5rem" }}>Nab!!</div>
+      <main className="container">
+        <h1>Upload a video - get 3D model!</h1>
+        <div className="grid">
+          <div>
+            <form>
+              <label>
+                <input type="file" />
+              </label>
+              <input type="submit" text="submit" />
+            </form>
+          </div>
+          <div>2</div>
+        </div>
+      </main>
     </>
   );
 }
