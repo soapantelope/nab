@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useState, useEffect, useRef, Suspense } from "react";
 import "./App.css";
+import Scene from "./components/render3d";
+
 
 // Following https://aps.autodesk.com/en/docs/reality-capture/v1/tutorials/create-3d-mesh-from-photos/
 function App() {
@@ -82,28 +82,28 @@ function App() {
       }
     };
 
-    const fetchPhotoscene = async (token) => {
-      try {
-        const response = await fetch(
-          "https://developer.api.autodesk.com/photo-to-3d/v1/photoscene/AtAuFsedTdqWdhF9VzHepp5oM9PITiuizI4xdMbz?format=rcm",
-          {
-            method: "GET",
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+    // const fetchPhotoscene = async (token) => {
+    //   try {
+    //     const response = await fetch(
+    //       "https://developer.api.autodesk.com/photo-to-3d/v1/photoscene/AtAuFsedTdqWdhF9VzHepp5oM9PITiuizI4xdMbz?format=rcm",
+    //       {
+    //         method: "GET",
+    //         headers: {
+    //           Authorization: "Bearer " + token,
+    //         },
+    //       }
+    //     );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch photoscene");
-        }
+    //     if (!response.ok) {
+    //       throw new Error("Failed to fetch photoscene");
+    //     }
 
-        const jsonData = await response.json();
-        console.log("Photoscene data:", jsonData);
-      } catch (error) {
-        console.error("Error fetching photoscene:", error);
-      }
-    };
+    //     const jsonData = await response.json();
+    //     console.log("Photoscene data:", jsonData);
+    //   } catch (error) {
+    //     console.error("Error fetching photoscene:", error);
+    //   }
+    // };
 
     createAccessToken().then((token) => {
       createPhotoscene(token);
@@ -113,7 +113,7 @@ function App() {
 
   return (
     <>
-      <div style={{ fontSize: "5rem" }}>Nab!!</div>
+      <div style={{ fontSize: "5rem" }}>📸 Nab</div>
       <main className="container">
         <h1>Upload a video - get 3D model!</h1>
         <div className="grid">
@@ -125,11 +125,12 @@ function App() {
               <input type="submit" text="submit" />
             </form>
           </div>
-          <div>2</div>
+          <div> <Scene /> </div>
         </div>
       </main>
     </>
   );
 }
+
 
 export default App;
