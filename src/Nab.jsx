@@ -25,7 +25,7 @@ export function Model(url) {
   );
 }
 
-useGLTF.preload(url);
+// useGLTF.preload(url);
 
 function Nab(video) {
   const [url, setURL] = useState("");

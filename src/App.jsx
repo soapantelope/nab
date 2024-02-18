@@ -12,7 +12,7 @@ function App() {
       {/* IMAGES */}
       {/* <img className="img" src={Cow}></img> */}
       {/* NAB */}
-      <Nab video="./intro.mp4"></Nab>
+      <Nab video="./cow.mp4"></Nab>
       <div className="container">
         <div style={{ fontSize: "2.5rem", fontWeight: "bold" }}>
           Look at this cute cow I made!
