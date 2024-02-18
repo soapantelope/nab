@@ -51,33 +51,6 @@ function App() {
   );
 }
 
-// const { exec } = require('child_process');
-
-// /* Uses FFmpeg & Swift */
-// async function processVideo(inputFilePath, outputFilePath) {
-//     // Execute FFmpeg command to extract frames from the video
-//     const ffmpegCommand = `ffmpeg -i ${inputFilePath} -r 4 output_frame_%04d.png`;
-//     await executeCommand(ffmpegCommand);
-
-//     // Execute Swift binary to generate the USDZ file
-//     const swiftCommand = `./HelloPhotogrammetry output_frame_directory ${outputFilePath} -d raw -o sequential -f normal`;
-//     await executeCommand(swiftCommand);
-// }
-
-// function executeCommand(command) {
-//     return new Promise((resolve, reject) => {
-//         exec(command, (error, stdout, stderr) => {
-//             if (error) {
-//                 console.error(`Error executing command: ${error.message}`);
-//                 reject(error);
-//             } else {
-//                 console.log(`Command output: ${stdout}`);
-//                 resolve();
-//             }
-//         });
-//     });
-// }
-
 
 
 export default App;

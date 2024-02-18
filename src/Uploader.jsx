@@ -2,31 +2,93 @@ import React, { useState, useRef } from 'react';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
 
+
 const FileUploadComponent = () => {
     const [loaded, setLoaded] = useState(false);
     const ffmpegRef = useRef(new FFmpeg());
-    // const videoRef = useRef(null);
+    const imageRef = useRef(null);
     const messageRef = useRef(null);
 
     // var in_name = "upload.mp4";
     // var out_name = "thumbnails/thumbnails%d.png";
+
+    /* FFMPEG WASM */
+
+    const uploadImages = async (images) => {
+        try {
+            const formData = new FormData();
+            formData.append('images', images); // Assuming you have only one image for now
+    
+            const response = await fetch('http://localhost:3000/process-images', {
+                method: 'POST',
+                body: formData
+            });
+    
+            if (response.ok) {
+                console.log('Images uploaded successfully');
+                // You can perform further actions here upon successful upload
+            } else {
+                console.error('Failed to upload images');
+            }
+        } catch (error) {
+            console.error('Error uploading images:', error);
+        }
+    };
 
 const loadVideo = async () => {
         // await ffmpeg.load();
 
         const ffmpeg = ffmpegRef.current;
         //First create a thumbnails directory in the file system
-       
-        ffmpeg.FS('mkdir','/videoFrames');
+        console.log("Loading Video");
+        await ffmpeg.createDir("videoFrames");
         // ffmpeg.FS('writeFile', "upload.mov", await fetchFile("../video-to-model-src/temp_videodata/IMG_0269.MOV"));
-        ffmpeg.FS('writeFile', "upload.mov", "../video-to-model-src/temp_videodata/IMG_0269.MOV");
-        await ffmpeg.run('-i', "upload.mov", '-r', 1, 'output_frame_%04d.png');
+        await ffmpeg.writeFile("upload.mov", await fetchFile("../video-to-model-src/temp_videodata/IMG_0269.MOV"));
+
+        // let data = await ffmpeg.readFile('upload.mov');
+        // console.log("Reading Uploaded Video:");
+        // console.log(data);
+        
+        await ffmpeg.exec(['-i', "upload.mov", '-r', "1", 'videoFrames/output_frame_%04d.png']);
     
-        //Read the contents of the specified folder
-        console.log(ffmpeg.FS('readdir', '/videoFrames'));
+        //Read the contents of the specified folder in a loop 
+        console.log("Created outputs!");
+        console.log(await ffmpeg.listDir('.'));
+        console.log(await ffmpeg.listDir('videoFrames'));
+        let fileData = await ffmpeg.readFile('videoFrames/output_frame_0001.png');
+        console.log("Reading Frame 1:");
+        console.log(fileData);
+        
+        // // const data = new Uint8Array(fileData as ArrayBuffer);
+        // var blob = new Blob([fileData], {'type': 'image/png'});
+        // imageRef.current.src = URL.createObjectURL(blob); 
+        
+        // if (imageRef.current) {
+        //     imageRef.current.src = URL.createObjectURL(
+        // new Blob([data.buffer], { type: 'image/png' })
+        // )
+
+        // For each image, upload it to the server
+        for (let i = 0; i < 10; i++) {
+            let image;
+            if (i < 10) {
+                image = await ffmpeg.readFile('videoFrames/output_frame_000' + str(i) + '.png');
+            }
+            else {
+                image = await ffmpeg.readFile('videoFrames/output_frame_00' + str(i) + '.png');
+            }
+
+            await uploadImages(image);
+        }
+
+        const response = await fetch('http://localhost:3000/process-images', {
+            method: 'POST',
+            body: formData
+        });
+        
         //view first image
-        var new_file = ffmpeg.FS('readFile', 'videoFrames/output_frame_0001.png');
-        console.log(new Blob([new_file.buffer], { type: 'image/png' }));
+        // var new_file = ffmpeg.FS('readFile', 'videoFrames/output_frame_0001.png');
+        // console.log(new Blob([new_file.buffer], { type: 'image/png' }));
 }
 
    
@@ -80,6 +142,8 @@ const loadVideo = async () => {
 //   };
 
 
+
+
   return (loaded
     ? (
         // <>
@@ -89,10 +153,11 @@ const loadVideo = async () => {
         //     <p>Open Developer Tools (Ctrl+Shift+I) to View Logs</p>
         // </> 
         <>
+        <image ref={imageRef}></image>
         <button onClick={loadVideo}> Now, upload Video </button>
         </>
     ) : (
-        <button onClick={load}>Load ffmpeg-core (~31 MB)</button>
+        <button onClick={load}>Load ffmpeg-core (~31 MB)</button> // prev load
         //   <div>
     //   <input type="file" onChange={handleFileChange} />
     //   <button onClick={handleUpload}>Upload</button>
