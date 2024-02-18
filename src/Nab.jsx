@@ -68,10 +68,10 @@ function Nab({ videoURL }) {
     // Load glTF resource asynchronously when URL changes
     async function loadGltf(url) {
       try {
-        const response = await fetch(url);
-        const blob = await response.blob();
-        const objectURL = URL.createObjectURL(blob);
-        setURL(objectURL);
+        // const response = await fetch(url);
+        // const blob = await response.blob();
+        // const objectURL = URL.createObjectURL(blob);
+        setURL(url);
       } catch (error) {
         console.error('Error loading glTF:', error);
       }
@@ -82,7 +82,7 @@ function Nab({ videoURL }) {
 
 
 function Model() {
-  console.log(nodes)
+  // console.log(nodes)
   return (
     // {/* <primitive object={scene} /> */}
     <group dispose={null}>

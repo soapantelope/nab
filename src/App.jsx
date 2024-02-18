@@ -3,7 +3,6 @@ import "./App.css";
 import Nab from "./Nab.jsx";
 import Intro from "./intro.mp4";
 import FileUploadComponent from "./Uploader.jsx";
-import { FFmpeg } from '@diffusion-studio/ffmpeg-js';
 
 // Following https://aps.autodesk.com/en/docs/reality-capture/v1/tutorials/create-3d-mesh-from-photos/
 function App() {
@@ -12,19 +11,19 @@ function App() {
   const [videoUrl, setVideoUrl] = useState(dbURL + "sparkling.glb");
 
 
-  const handleFileUpload = (file) => {
-    console.log("Updating File")
-    // Here you would handle the file upload logic
-    // For now, just update the video URL with a new URL
-    setVideoUrl(dbURL + "poly.glb");
-  };
+  // const handleFileUpload = (file) => {
+  //   console.log("Updating File")
+  //   // Here you would handle the file upload logic
+  //   // For now, just update the video URL with a new URL
+  //   setVideoUrl(dbURL + "poly.glb");
+  // };
 
-  const handleVideoUpload = (file) => {
-    console.log("Updating File")
-    // Here you would handle the file upload logic
-    // For now, just update the video URL with a new URL
-    setVideoUrl(dbURL + "poly.glb");
-  };
+  // const handleVideoUpload = (file) => {
+  //   console.log("Updating File")
+  //   // Here you would handle the file upload logic
+  //   // For now, just update the video URL with a new URL
+  //   setVideoUrl(dbURL + "poly.glb");
+  // };
 
   return (
     <div className="colContainer">
@@ -33,9 +32,9 @@ function App() {
         {/* Nab */}
         <Nab videoURL={videoUrl}></Nab>
         {/* File upload component */}
-        <input type="file" onChange={handleFileChange} />
-        <button onClick={handleFileUpload}>Upload</button>
-        {/* <FileUploadComponent /> */}
+        {/* <input type="file" onChange={handleFileChange} /> */}
+        {/* <button onClick={handleFileUpload}>Upload</button> */}
+        <FileUploadComponent />
       </div>
       
       {/* Right Column */}
