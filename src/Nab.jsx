@@ -8,10 +8,15 @@ import { OrbitControls } from "@react-three/drei";
 
 import { useGLTF } from "@react-three/drei";
 import Glb from "./poly.glb";
+import { useLoader } from "@react-three/fiber";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 export function Model(url) {
   const { nodes, materials } = useGLTF(url);
+  //   const gltf = useLoader(GLTFLoader, workingURL);
+
   return (
+    // <primitive object={gltf.scene} />
     <group dispose={null}>
       <mesh
         scale={50}
@@ -37,7 +42,8 @@ function Nab(video) {
       <Canvas>
         <OrbitControls />
         <Suspense fallback={null}>
-          <Model url={url} />
+          {/* Replace with given URL */}
+          <Model url="https://pub-8fdcfc93cb6149e48647d45b07b5e003.r2.dev/src/testdata/poly.glb" />
           <ambientLight intensity={3} />
           <pointLight position={[10, 10, 10]} />
         </Suspense>
